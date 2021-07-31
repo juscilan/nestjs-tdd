@@ -1,4 +1,7 @@
 import { Module } from '@nestjs/common';
+import { TodoService } from './todo.service';
 
-@Module({})
+@Module({
+  providers: [TodoService]
+})
 export class TodoModule {}
