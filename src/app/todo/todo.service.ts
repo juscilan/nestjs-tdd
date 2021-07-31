@@ -28,7 +28,6 @@ export class TodoService {
     }
 
     async delete(id: string){
-      const todo = await this.findOne(id);
-      return await this.todoRepository.softDelete(todo);
+      return await this.todoRepository.delete(id);
     }
 }
