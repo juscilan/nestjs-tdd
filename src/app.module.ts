@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { TodoModule } from './app/todo/todo.module';
 @Module({
   imports: [TypeOrmModule.forRootAsync({
     imports: [ConfigModule],
@@ -15,7 +16,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         entities: [],
         synchronize: true,   
     })
-  }),
+  }), TodoModule,
   ],
   controllers: [],
   providers: [],
