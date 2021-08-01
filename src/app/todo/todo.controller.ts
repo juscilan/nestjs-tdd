@@ -48,7 +48,7 @@ export class TodoController {
   }
 
   @Delete(':id')
-  @ApiOperation({summary: 'Eclui uma tarefa'})
+  @ApiOperation({summary: 'Exclui uma tarefa'})
   @ApiResponse({status: 204, description: 'Tarefa exluida'})
   @ApiResponse({status: 400, description: 'Parametros invalidos'})
   @HttpCode(HttpStatus.NO_CONTENT)
