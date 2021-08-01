@@ -1,5 +1,7 @@
 import { NotFoundException } from '@nestjs/common';
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Post, Put } from '@nestjs/common';
+import { CreateTodoDto } from '../dto/todo-create.dto';
+import { UpdateTodoDto } from '../dto/todo-upadate.dto';
 import { TodoService } from './todo.service';
 
 @Controller('api/v1/todos')
@@ -20,12 +22,12 @@ export class TodoController {
   }
 
   @Post()
-  async create(@Body() body){
+  async create(@Body() body: CreateTodoDto){
     return await this.todoService.create(body);
   }
 
   @Put(':id')
-  async update(@Param('id', new ParseUUIDPipe()) id: string, @Body() body){  
+  async update(@Param('id', new ParseUUIDPipe()) id: string, @Body() body: UpdateTodoDto){  
     const todo = await this.todoService.findOne(id);
     if(!todo)
       throw new NotFoundException();
