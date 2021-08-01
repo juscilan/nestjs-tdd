@@ -23,6 +23,8 @@ export class TodoService {
 
     async update(id: string, data){
       const todo = await this.findOne(id);
+      if(!todo)
+        return undefined
       this.todoRepository.merge(todo, data)
       return await this.todoRepository.save(todo);
     }
