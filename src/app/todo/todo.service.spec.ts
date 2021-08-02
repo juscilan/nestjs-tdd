@@ -22,9 +22,9 @@ describe('TodoService', () => {
         provide: getRepositoryToken(TodoEntity),
         useValue: {
           find: jest.fn().mockResolvedValue(todoEntityList),
-          findOne: jest.fn(),
-          save: jest.fn(),
-          create: jest.fn(),
+          findOne: jest.fn().mockResolvedValue(todoEntityList[0]),
+          save: jest.fn().mockResolvedValue(todoEntityList[0]),
+          create: jest.fn().mockReturnValue(todoEntityList[0]),
           merge: jest.fn(),
           delete: jest.fn(),
         }
@@ -42,7 +42,7 @@ describe('TodoService', () => {
   });
 
   describe('findAll', () => {
-    test('should return a todo list of TodoEntity', async () => {
+    test('should return a todo list of TodoEntity successfully', async () => {
       const result = await sut.findAll();
       expect(result).toEqual(todoEntityList);
       expect(todoRepository.find).toHaveBeenCalledTimes(1);
@@ -50,7 +50,30 @@ describe('TodoService', () => {
     test('should throw an exception', () => {
       jest.spyOn(todoRepository, 'find').mockRejectedValueOnce(new Error());
       expect(sut.findAll()).rejects.toThrowError();
-    });  
+    }); 
+  });
 
-  })
+  describe('findOne', () => {
+    test('should return a todo of TodoEntity successfully', async () => {
+      const result = await sut.findOne('1');
+      expect(result).toEqual(todoEntityList[0]);
+      expect(todoRepository.findOne).toHaveBeenCalledTimes(1);
+    });
+    test('should throw an exception', () => {
+      jest.spyOn(todoRepository, 'findOne').mockRejectedValueOnce(new Error());
+      expect(sut.findOne('1')).rejects.toThrowError();
+    });  
+  });
+
+  describe('create', () => {
+    test('should create a todo successfully', async () => {
+      const result = await sut.create(todoEntityList[0]);
+      expect(result).toEqual(todoEntityList[0]);
+      expect(todoRepository.create).toHaveBeenCalledTimes(1);
+    });
+    test('should throw an exception', () => {
+      jest.spyOn(todoRepository, 'findOne').mockRejectedValueOnce(new Error());
+      expect(sut.findOne('1')).rejects.toThrowError();
+    });  
+  });
 });
